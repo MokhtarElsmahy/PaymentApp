@@ -1,0 +1,59 @@
+<div class="jumbotron py-3">
+  <h1 class="display-4 text-center">Drains</h1>
+</div>
+
+
+<div>
+  <div class="mb-4">
+    <div class="" style="width:300px ;display: inline-block; margin-left: 10px;">
+      <label>Arabic Name</label>
+      <input type="text" name="AOdmName" [(ngModel)]="filter.AOdmName" class="form-control" placeholder="Arabic name">
+    </div>
+
+    <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+      <label>English Name</label>
+      <input type="text" name="EOdmName" [(ngModel)]="filter.EOdmName" class="form-control" placeholder="English name">
+    </div>
+
+    <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+      <label>Length</label>
+      <input type="text" name="Length" [(ngModel)]="filter.Length" class="form-control" placeholder="Length">
+    </div>
+
+    <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+      <label>Year</label>
+      <input type="number" name="Year" [(ngModel)]="filter.Year" class="form-control" placeholder="Year">
+    </div>
+
+  </div>
+  <div class="mb-4"  style="text-align:center;display: flex;justify-content: center;">
+    <button class="btn btn-primary" type="button" style="margin-top: 40px;margin-right: 10px;margin-bottom: 10px;"(click)="Filter()">Filter</button>
+    <button class="btn btn-primary" type="button" style="margin-top: 40px;margin-bottom: 10px;"(click)="ClearFilter()">Clear Filter</button>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Drain Name</td>
+      <td>ID</td>
+      <td>Lenght</td>
+      <td>Area</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let drain of service.DrainPage.OpenDrain;let i=index;" routerLink='/DrainLevels/{{drain.OdmId}}' style="cursor:pointer;" id="row_{{i}}" (click)="rowClick(i)">
+      <td>{{drain.AOdmName}}</td>
+      <td>{{drain.OdmId}}</td>
+      <td>{{drain.Length}}</td>
+      <td>{{drain.Area}}</td>
+
+    </tr>
+  </tbody>
+
+</table>
+<div style="text-align:center;display: flex;justify-content: center;">
+  <ngb-pagination [collectionSize]="service.DrainPage.Count" [pageSize]="pageSize" (pageChange)="GoToPage($event)"
+    [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+
+</div>

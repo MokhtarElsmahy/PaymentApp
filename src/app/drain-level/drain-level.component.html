@@ -1,0 +1,85 @@
+<div class="jumbotron py-4 my-4">
+  <h1 class="display-4 text-center">Drain Levels</h1>
+</div>
+<form #form="ngForm" (submit)="onSubmit(form)">
+
+  <div class="OpenDrainHead" style="overflow-x:scroll;width: 100%;;">
+    <input type="hidden" name="OdmId" [value]="openDrain.OdmId" />
+    <div class="mb-4">
+      <div class="" style="width:300px ;display: inline-block; margin-left: 10px;">
+        <input type="text" name="AOdmName" [class.isUpdated]="AOdmName.dirty" #AOdmName="ngModel"
+          [(ngModel)]="openDrain.AOdmName" class="form-control" placeholder="Arabic name">
+      </div>
+      <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+        <input type="text" name="EOdmName" [class.isUpdated]="EOdmName.dirty" #EOdmName="ngModel"
+          [(ngModel)]="openDrain.EOdmName" class="form-control" placeholder="English name">
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+        <input type="text" name="Length" [class.isUpdated]="Length.dirty" #Length="ngModel"
+          [(ngModel)]="openDrain.Length" class="form-control" placeholder="Length">
+      </div>
+      <div class="" style="width:300px ;display: inline-block;margin-left: 10px;">
+        <input type="text" name="Area" [class.isUpdated]="Area.dirty" #Area="ngModel" [(ngModel)]="openDrain.Area"
+          class="form-control" placeholder="Area">
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" type="button" style="margin-top: 40px;margin-bottom: 10px;;"
+    (click)="AddNewRow()">ِADD</button>
+  <div class="OpenDrainTale" style="overflow-y:scroll;max-height: 600px;">
+
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <td>UsualLevel</td>
+          <td>ActualLevel</td>
+          <td>Note</td>
+          <td>Date</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of openDrain.DrainLevels; let i = index">
+          <td><input type="text" [class.isUpdated]="UsualLevel.dirty" name="UsualLevel{{i}}" #UsualLevel="ngModel"
+              [(ngModel)]="item.UsualLevel" class="form-control" (blur)="CheckDirty(i)" placeholder="Last name"> </td>
+
+          <td><input type="text" [class.isUpdated]="ActualLevel.dirty" name="ActualLevel{{i}}" #ActualLevel="ngModel"
+              [(ngModel)]="item.ActualLevel" class="form-control" (blur)="CheckDirty(i)" placeholder="Last name"> </td>
+
+          <td><input type="text" [class.isUpdated]="Note.dirty" name="Note{{i}}" #Note="ngModel" [(ngModel)]="item.Note"
+              class="form-control" placeholder="Last name" (blur)="CheckDirty(i)"> </td>
+
+          <td>
+            <mat-form-field appearance="fill">
+              <input matInput [matDatepicker]="picker" [class.isUpdated]="MeasureDate.dirty" name="MeasureDate{{i}}"
+                #MeasureDate="ngModel" class="form-control" [(ngModel)]="item.MeasureDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <!-- <input type="date" [class.isUpdated]="MeasureDate.dirty"   name="MeasureDate{{i}}"        #MeasureDate="ngModel"        [(ngModel)]="item.MeasureDate" class="form-control"
+            placeholder="Last name"> </td> -->
+
+            <td>
+              <!-- <button class="btn btn-danger" (click)="DeleteLevel(item.MeasureDate,item.OdmId,i)">Delete</button> -->
+
+
+              <div class="button button-block button-positive btn-style"  (click)="DeleteLevel(item.MeasureDate,item.OdmId,i)">
+                <i class="icon ion-ios7-camera"> Delete</i>                      
+              </div>
+
+              <!-- <input type="button" class="form-control" value="Delete"  (click)="DeleteLevel(item.MeasureDate,item.OdmId)"/>  -->
+            </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align:center;display: flex;justify-content: center;margin-bottom: 40px;">
+  <button class="btn btn-primary" type="submit" style="margin-bottom:40px ;">Save</button>
+  </div>
+
+</form>
