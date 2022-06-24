@@ -2,11 +2,11 @@ import { DrainLevelDto } from "./DrainLevelDto.model"
 
 export class DrainDto {
     OdmId: number
-    Odmid1: String
-    OdmIdParent: String
+    Odmid1: string
+    OdmIdParent: string
     Rank: number
-    AOdmName: String
-    EOdmName: String
+    AOdmName: string
+    EOdmName: string
     Length: number
     Area: number
     Navigation: number
@@ -18,13 +18,14 @@ export class DrainDto {
     Location: number
     Longitude: number
     Latitude: number
-    OdmDesc: String
+    OdmDesc: string
     PollutionDegree: number
     Realdrain: number
     PeriorityChange: number
-    SideBankWidth: String
-    DrainageStatus: String
+    SideBankWidth: string
+    DrainageStatus: string
     DrainType: number
+    RowStatus :number
 
     DrainLevels: DrainLevelDto[]
 

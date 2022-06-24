@@ -43,7 +43,7 @@
       <tbody>
 
         <tr *ngFor="let item of openDrain.DrainLevels; let i = index">
-          <td><input type="text" [class.isUpdated]="UsualLevel.dirty" name="UsualLevel{{i}}" #UsualLevel="ngModel"
+          <td ><input type="text" [class.isUpdated]="UsualLevel.dirty" name="UsualLevel{{i}}" #UsualLevel="ngModel"
               [(ngModel)]="item.UsualLevel" class="form-control" (blur)="CheckDirty(i)" placeholder="Last name"> </td>
 
           <td><input type="text" [class.isUpdated]="ActualLevel.dirty" name="ActualLevel{{i}}" #ActualLevel="ngModel"

@@ -9,4 +9,5 @@ export class DrainLevelDto {
     Note: String
     isUpdated :boolean = false
     isAdded :boolean = false
+    RowStatus :number
 }

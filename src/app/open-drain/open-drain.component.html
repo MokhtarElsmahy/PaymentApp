@@ -1,0 +1,164 @@
+<div>
+  <form autocomplete="off" #form="ngForm">
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- <a class="navbar-brand" href="#">Open Drain</a> -->
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <!-- filter -->
+              <button class="btn btn-info" (click)="Search()">Filter</button>
+            </li>
+            <li class="nav-item">
+               <!--clear filter -->
+               <button class="btn btn-outline-dark" style="margin-left: 5px;" (click)="Clear()">Clear Filter</button>
+            </li>
+            <li class="nav-item dropdown">
+              <!-- add level -->
+              <button class="btn btn-primary" style="margin-left: 5px;" (click)="AddLevel()">Add Level</button>
+            </li>
+            <li class="nav-item">
+               <!-- save -->
+               <button class="btn btn-success" style="margin-left: 5px;" (click)="Save(form)">Save</button>
+            </li>
+            <li class="nav-item">
+              <!-- delete -->
+              <button class="btn btn-danger" style="margin-left: 5px;" (click)="Delete()">Delete</button>
+           </li>
+          </ul>
+          <div class="d-flex" style="margin-top: 35px;">
+            <ngb-pagination  [collectionSize]="Drain.Count" [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true"
+            (pageChange)="GoToPage($event,form)">
+            <ng-template ngbPaginationPages let-page let-pages="pages">
+              <li class="ngb-custom-pages-item">
+                <!-- <div class="mb-3 d-flex flex-nowrap px-2" style="background-color: lightgray ;">
+                  <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+                  <input  #i type="text"
+                   inputmode="numeric"
+                   pattern="[0-9]*" class="form-control custom-pages-input"
+                   id="paginationInput" 
+                   [value]="page"
+                   aria-labelledby="paginationInputLabel paginationDescription"
+                   style="width: 2.5rem" />
+                  <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                    of {{Drain.Count}}</span>
+                </div> -->
+              </li>
+            </ng-template>
+          </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- <div class="form-row">
+      <div class="form-group col-md-6">
+         buttons
+      </div>
+      <div class="form-group col-md-4">
+           navigation
+      </div>
+
+    </div> -->
+ 
+      <div class="form-row">
+        <input type="hidden" [value]="SearchFilter.OdmId" name="OdmId" />
+      <div class="form-group col-md-3">
+        <label for="inputRank">الرتبة</label>
+        <input type="number" class="form-control" [(ngModel)]="SearchFilter.StartRank" (change)="DrainChangeStatus()" name="StartRank" id="inputRank">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputParentDrain">المصرف الام</label>
+        <input type="text" class="form-control" [(ngModel)]="SearchFilter.OdmIdParent" (change)="DrainChangeStatus()" name="OdmIdParent"
+          id="inputParentDrain">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputCode">كود المصرف</label>
+        <input type="text" class="form-control" [(ngModel)]="SearchFilter.Odmid1" (change)="DrainChangeStatus()" name="Odmid1" id="inputCode">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputPassword4">الاسم العربى</label>
+        <input type="text" class="form-control" [(ngModel)]="SearchFilter.AOdmName" (change)="DrainChangeStatus()" name="AOdmName" id="inputPassword4">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputArabicName">الاسم الانجليزى</label>
+        <input type="text" class="form-control" [(ngModel)]="SearchFilter.EOdmName" (change)="DrainChangeStatus()" name="EOdmName"
+          id="inputArabicName">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputEnglishName">سنة الانشاء</label>
+        <!-- <input type="date" class="form-control" [(ngModel)]="SearchFilter.StartYear" name="StartYear"
+          id="inputEnglishName"> -->
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="picker" name="StartYear" (change)="DrainChangeStatus()"
+               class="" [(ngModel)]="SearchFilter.StartYear">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputLength">الطول</label>
+        <input type="number" class="form-control" [(ngModel)]="SearchFilter.StartLength" name="StartLength" (change)="DrainChangeStatus()"
+          id="inputLength">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputArea">المساحه</label>
+        <input type="number" class="form-control" [(ngModel)]="SearchFilter.StartArea" name="StartArea" id="inputArea" (change)="DrainChangeStatus()">
+      </div>
+
+
+
+    </div>
+    <div style="overflow-y:scroll;max-height: 600px;overflow-y:scroll;">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <!-- <th scope="col">ID</th> -->
+            <th scope="col">Usual Level</th>
+            <th scope="col">Actual Level</th>
+            <th scope="col">Note</th>
+            <th scope="col">Measure Date</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <!-- UnDeletedLevels(Drain.OpenDrain[0]?.DrainLevels) -->
+        <tbody>
+          <tr  *ngFor="let item of UnDeletedLevels(Drain.OpenDrain[0]?.DrainLevels || []); let i = index" (click)="GetLevel(item.OdmId , item.MeasureDate , i)" id="row_{{i}}" style="cursor:pointer;" [class.isAdded]="item.RowStatus==4">
+            <td><input style="margin-top: 5px;" type="text" [class.isUpdated]="UsualLevel.dirty"  (change)="LevelChangeStatus(item)" (click)="preventpro($event)" name="UsualLevel{{i}}" #UsualLevel="ngModel"
+                [(ngModel)]="item.UsualLevel" class="form-control" placeholder="Last name"> </td>
+
+            <td><input style="margin-top: 5px;" type="text" [class.isUpdated]="ActualLevel.dirty"  (change)="LevelChangeStatus(item)" (click)="preventpro($event)" name="ActualLevel{{i}}" #ActualLevel="ngModel"
+                [(ngModel)]="item.ActualLevel" class="form-control" placeholder="Last name"> </td>
+
+            <td><input style="margin-top: 5px;" type="text" [class.isUpdated]="Note.dirty" (change)="LevelChangeStatus(item)" (click)="preventpro($event)" name="Note{{i}}" #Note="ngModel"
+                [(ngModel)]="item.Note" class="form-control" placeholder="Last name"> </td>
+
+            <td>
+              
+                <mat-form-field appearance="outline">
+                  <input matInput [matDatepicker]="picker" [class.isUpdated]="MeasureDate.dirty" name="MeasureDate{{i}}"
+                    #MeasureDate="ngModel" [(ngModel)]="item.MeasureDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              
+            </td>
+            <td>
+              <!-- <div class="button button-block button-positive btn-style">
+                <i class="icon ion-ios7-camera"> Delete</i>
+              </div> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+   
+   
+  </div>
+</form>
+</div>

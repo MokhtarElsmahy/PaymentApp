@@ -53,7 +53,35 @@
 
 </table>
 <div style="text-align:center;display: flex;justify-content: center;">
-  <ngb-pagination [collectionSize]="service.DrainPage.Count" [pageSize]="pageSize" (pageChange)="GoToPage($event)"
-    [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+  <!-- <ngb-pagination [collectionSize]="service.DrainPage.Count" [pageSize]="pageSize" (pageChange)="GoToPage($event)"
+    [(page)]="page" aria-label="Default pagination"></ngb-pagination> -->
 
+
+    <ngb-pagination [collectionSize]="service.DrainPage.Count" [(page)]="page" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="GoToPage($event)" >
+      <ng-template ngbPaginationPages let-page let-pages="pages">
+          <li class="ngb-custom-pages-item" *ngIf="service.DrainPage.Count > 0">
+              <div class="mb-3 d-flex flex-nowrap px-2">
+                <label
+                    id="paginationInputLabel"
+                    for="paginationInput"
+                    class="col-form-label me-2 ms-1"
+                >Page</label>
+                <input #i
+                    type="text"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    class="form-control custom-pages-input"
+                    id="paginationInput"
+                    [value]="page"
+                    (keyup.enter)="selectPage(i.value)"
+                    (blur)="selectPage(i.value)"
+                    aria-labelledby="paginationInputLabel paginationDescription"
+                    style="width: 2.5rem"
+                />
+                <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                    of {{service.DrainPage.Count}}</span>
+              </div>
+          </li>
+      </ng-template>
+  </ngb-pagination>
 </div>

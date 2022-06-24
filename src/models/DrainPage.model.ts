@@ -2,6 +2,6 @@ import { DrainDto } from "./DrainDto.model";
 
 export class DrainPage{
 
-    OpenDrain: DrainDto[];
+    OpenDrain: DrainDto[] = [];
     Count : number;
 }

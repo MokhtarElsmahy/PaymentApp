@@ -58,4 +58,9 @@ export class DrainsComponent implements OnInit {
     // this.service.FilterDrains(this.filter)
     this.service.GetAllDrains(this.page, this.pageSize);
   }
+
+  selectPage(xx : string)
+  {
+       console.log(xx);
+  }
 }

@@ -16,6 +16,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { OpenDrainComponent } from './open-drain/open-drain.component';
+ import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -23,7 +25,9 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     DrainsComponent,
-    DrainLevelComponent
+    DrainLevelComponent,
+    OpenDrainComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,8 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     NgbModule,
     NgbAlertModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    ToastrModule.forRoot()
   ],
 
   providers: [],

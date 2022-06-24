@@ -53,7 +53,8 @@ export class DrainLevelComponent implements OnInit {
       ActualLevel: 0,
       Note: "",
       isUpdated: false,
-      isAdded: true
+      isAdded: true,
+      RowStatus:4
     };
 
   }
