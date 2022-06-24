@@ -42,7 +42,8 @@ export class OpenDrainComponent implements OnInit {
     EndLength: 0,
     EndArea: 0,
     EndYear: new Date(),
-    RowStatus: 1
+    RowStatus: 1,
+    isActive :1
   }
 
 
@@ -60,7 +61,8 @@ export class OpenDrainComponent implements OnInit {
     EndLength: 0,
     EndArea: 0,
     EndYear: new Date(),
-    RowStatus: 1
+    RowStatus: 1,
+    isActive :1
 
 
 
@@ -69,12 +71,13 @@ export class OpenDrainComponent implements OnInit {
   }
 
 
-  Search() {
+  Search(form :NgForm) {
 
     this.Service.Search(this.SearchFilter, "DrainLevels", this.page).subscribe(
 
       res => {
         this.Drain = res as DrainPage;
+        form.form.markAsPristine();
         console.log(this.Drain)
         this.SearchFilter.AOdmName = this.Drain?.OpenDrain[0]?.AOdmName;
         this.SearchFilter.StartYear = this.Drain?.OpenDrain[0]?.Year;
@@ -85,17 +88,14 @@ export class OpenDrainComponent implements OnInit {
         this.SearchFilter.OdmIdParent = this.Drain?.OpenDrain[0]?.OdmIdParent;
         this.SearchFilter.OdmId = this.Drain?.OpenDrain[0]?.OdmId;
         this.SearchFilter.RowStatus = 1;
-
-
-
-
-
+      
       },
       err => {this.toastr.error("Error")}
     );
 
 
     this.PagedSearchFilter = Object.assign({}, this.SearchFilter);
+    
 
     //this.SearchFilter.AOdmName = this.Drain.OpenDrain[0].AOdmName;
 
@@ -109,6 +109,11 @@ export class OpenDrainComponent implements OnInit {
       
       return;
     }
+    if (this.PagedSearchFilter.isActive == 0) {
+      this.toastr.error("You must Filter first");
+      return;
+    }
+
     this.page = event;
     this.Service.Search(this.PagedSearchFilter, "DrainLevels", this.page).subscribe(
 
@@ -143,6 +148,21 @@ export class OpenDrainComponent implements OnInit {
     this.SearchFilter.StartRank = 0;
     this.SearchFilter.OdmIdParent = "";
     this.Drain.OpenDrain[0].DrainLevels = [];
+
+    this.PagedSearchFilter.OdmId=0,
+    this.PagedSearchFilter.Odmid1= "",
+    this.PagedSearchFilter.OdmIdParent= "",
+    this.PagedSearchFilter.StartRank= 0,
+    this.PagedSearchFilter.AOdmName= "",
+    this.PagedSearchFilter.EOdmName= "",
+    this.PagedSearchFilter.StartLength= 0,
+    this.PagedSearchFilter.StartArea= 0,
+    this.PagedSearchFilter.StartYear= new Date(),
+    this.PagedSearchFilter.EndLength= 0,
+    this.PagedSearchFilter.EndArea= 0,
+    this.PagedSearchFilter.EndYear= new Date(),
+    this.PagedSearchFilter.RowStatus= 1
+    this.PagedSearchFilter.isActive= 0
    // this.PagedSearchFilter = {};
   }
 
